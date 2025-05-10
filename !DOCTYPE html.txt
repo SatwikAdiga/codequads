@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>swapNstudy Login & Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fc;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .login-box, .dashboard {
+      background: white;
+      padding: 20px;
+      margin-top: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #aaa;
+    }
+    h2 {
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .box {
+      background: #e8f0fe;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #accessoryList {
+      margin-top: 20px;
+    }
+    .item {
+      padding: 10px;
+      margin: 5px 0;
+      background: #fff8e1;
+      border-radius: 5px;
+    }
+    .wishlist-cart {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .wishlist, .cart {
+      flex: 1;
+      background: #e3fce1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .error { color: red; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Page -->
+  <div id="loginPage" class="login-box">
+    <h2>Login to swapNstudy</h2>
+    <input type="text" id="usn" placeholder="Enter USN (e.g., 1KI24CS151)" />
+    <input type="password" id="password" placeholder="Enter Password" />
+    <button onclick="login()">Login</button>
+    <p class="error" id="loginError"></p>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div id="dashboard" class="dashboard" style="display: none;">
+    <h2>Welcome to swapNstudy, <span id="userDisplay"></span></h2>
+
+    <div class="options">
+      <div class="box" onclick="openBuyingPage()">🛒 Buying</div>
+      <div class="box" onclick="openSellingPage()">📚 Selling</div>
+<script>
+  const validUsers = {
+    "1KI24CS151": "SINCHU"
+  };
+
+  const wishlist = [];
+  const cart = [];
+
+  function login() {
+    const usn = document.getElementById('usn').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorBox = document.getElementById('loginError');
+
+    if (validUsers[usn] && validUsers[usn] === password) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('userDisplay').innerText = usn;
+      errorBox.innerText = '';
+    } else {
+      errorBox.innerText = 'Invalid USN or Password. Please try again.';
+    }
+  }
+
+
+  function updateList(id, list) {
+    const ul = document.getElementById(id);
+    ul.innerHTML = "";
+    list.forEach(i => {
+      const li = document.createElement('li');
+      li.innerText = i;
+      ul.appendChild(li);
+    });
+  }
+
+  function searchAccessories() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const items = document.querySelectorAll('#accessoryList .item');
+    items.forEach(item => {
+      const name = item.getAttribute('data-name').toLowerCase();
+      item.style.display = name.includes(input) ? "block" : "none";
+    });
+  }
+
+  function openBuyingPage() {
+    window.location.href = "buying.html"; // You need to create this file separately
+  }
+  function openSellingPage() {
+    window.location.href = "selling.html"; // You need to create this file separately
+  }
+</script>
+
+</body>
+</html>

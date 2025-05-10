@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sell a Book</title>
+  <style>
+    body { font-family: Arial; margin: 30px; }
+    input[type="text"], input[type="number"] {
+      padding: 8px; margin: 5px 0; width: 300px;
+    }
+    button { padding: 6px 12px; margin-top: 10px; cursor: pointer; }
+    #confirmationBox, #resultMessage {
+      margin-top: 20px; padding: 10px;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Sell a Book</h2>
+
+  <p><strong>Username:</strong> <span id="username">Sinchanaa</span></p>
+
+  <label>Book Name:</label><br>
+  <input type="text" id="bookName" placeholder="Enter book name"><br>
+
+  <label>Credit Points (1–10):</label><br>
+  <input type="number" id="creditPoints" placeholder="Enter credit points"><br>
+
+  <button onclick="initiateSell()">Sell</button>
+
+  <div id="confirmationBox" style="display:none;">
+    <p>Do you want to sell this book?</p>
+    <button onclick="confirmSell(true)">Yes</button>
+    <button onclick="confirmSell(false)">No</button>
+  </div>
+
+  <div id="resultMessage" style="font-weight:bold; color:green;"></div>
+
+  <script>
+    const username = "student123"; // simulated login user
+
+    function initiateSell() {
+      const book = document.getElementById("bookName").value.trim();
+      const credit = parseInt(document.getElementById("creditPoints").value.trim());
+      const result = document.getElementById("resultMessage");
+      result.innerText = "";
+
+      if (!book || isNaN(credit)) {
+        alert("Please enter both book name and credit points.");
+        return;
+      }
+
+      if (credit < 1 || credit > 10) {
+        alert("Enter valid credit points (1 to 10).");
+        return;
+      }
+
+      document.getElementById("confirmationBox").style.display = "block";
+    }
+
+    function confirmSell(choice) {
+      document.getElementById("confirmationBox").style.display = "none";
+      const result = document.getElementById("resultMessage");
+      if (choice) {
+        result.innerText = "Your book is confirmed to sell. Thank you.";
+      } else {
+        result.innerText = "Sale cancelled.";
+      }
+    }
+  </script>
+
+</body>
+</html>
